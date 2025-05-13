@@ -1,0 +1,82 @@
+= DigiByte Improvement Proposal: Add Verthash to DigiByte MultiAlgo for Merged Mining with Vertcoin =
+
+== DIP Header ==
+ DIP: 0002
+ Title: Add Verthash to DigiByte MultiAlgo for Merged Mining with Vertcoin
+ Author: Hugh Robinson <hannibal@wildcat.eco>
+ Discussions-To: https://github.com/DigiByte-Core/dips/discussions/categories/dip-discussions
+ Comments-Summary: No comments yet.
+ Comments-URI: https://github.com/DigiByte-Core/dips/wiki/Comments:DIP-XXXX
+ Status: Draft
+ Type: Standards Track
+ Created: 2025-05-12
+ License: BSD-2-Clause
+
+== Abstract ==
+This proposal suggests integrating the Verthash proof-of-work algorithm into DigiByte's existing MultiAlgo system to enable merged mining with Vertcoin. Verthash is an ASIC-resistant algorithm designed to be GPU-friendly, which aligns with DigiByte's philosophy of decentralization and broad mining accessibility. The addition of Verthash would allow miners to simultaneously mine DigiByte and Vertcoin, increasing DigiByte’s overall hashpower, enhancing network security, and fostering cross-community collaboration. This is modeled after the successful implementation of merged mining between Litecoin and Dogecoin.
+
+== Copyright ==
+This document is dual-licensed under the BSD 2-clause license and the Open Publication License (OPL 1.0) with no options exercised.
+
+== Specification ==
+The technical changes required to implement this DIP include:
+* Adding Verthash to DigiByte's MultiAlgo consensus layer.
+* Implementing AuxPoW (auxiliary proof-of-work) support for Verthash blocks to enable merged mining.
+* Ensuring the difficulty adjustment algorithm (e.g., DigiShield) properly handles Verthash independently from other algorithms.
+* Maintaining full compatibility with existing mining software by coordinating with the Vertcoin development team and ecosystem.
+* Providing developer and miner documentation for setting up merged mining nodes and pools.
+
+This integration must follow DigiByte's current block validation and reward structure, ensuring equal treatment of Verthash alongside the other supported algorithms (SHA256, Scrypt, Qubit, Skein, Odocrypt).
+
+== Motivation ==
+DigiByte’s MultiAlgo design was built to encourage mining decentralization and resilience against centralization attacks. However, current hashpower across DigiByte’s algos remains vulnerable to concentrated attacks due to stagnant or low participation from GPU miners.
+
+Verthash presents a strategic opportunity. Vertcoin has maintained an active GPU mining community due to its anti-ASIC stance. Merged mining with Vertcoin would allow these miners to support both chains without additional energy consumption, boosting DigiByte’s total security budget. By adopting Verthash, DigiByte not only diversifies its mining algorithms, but gains a collaborative partner in the Vertcoin ecosystem.
+
+Merged mining will also increase DigiByte's visibility, improve network health, and encourage additional developers and mining pool operators to build multi-chain infrastructure. It will make DigiByte a beacon chain in the GPU mining space, particularly as other coins become increasingly dominated by ASICs or move toward proof-of-stake.
+
+== Rationale ==
+The Litecoin-Dogecoin merged mining setup provides a strong precedent. In 2014, Dogecoin transitioned from independent Scrypt mining to a merged-mined setup with Litecoin, resulting in:
+* Dramatic increases in network hashpower
+* Greater miner incentives (dual rewards)
+* Stronger community cohesion
+
+Verthash is a memory-hard algorithm requiring large DAG files (~2GB+), deterring ASIC development while allowing mainstream GPU participation. Vertcoin’s current ecosystem includes compatible mining software, pool infrastructure, and an active userbase.
+
+Merged mining with DigiByte would:
+* Reinforce both networks’ security
+* Increase miner profitability without raising energy costs
+* Encourage long-term cooperation between DigiByte and Vertcoin communities
+
+By leveraging shared values and infrastructure, this integration positions DigiByte as a leader in proof-of-work innovation and grassroots decentralization.
+
+== Backwards Compatibility ==
+This proposal is backwards compatible with existing DigiByte functionality. All existing algorithms and nodes will continue to function without disruption.
+
+Verthash will be added as an additional optional algorithm. Legacy clients and pools that do not support Verthash will remain operable, and block validation logic will continue to honor blocks mined under the other five algorithms.
+
+AuxPoW implementation will require full node support to verify merged-mined blocks. However, this support is modular and will not impact non-Verthash blocks or existing miners.
+
+== Reference Implementation ==
+A reference implementation will be provided via a fork of DigiByte Core after community discussion reaches consensus. Code will be modeled after prior AuxPoW implementations in other Bitcoin-derived chains and leverage Vertcoin's open-source Verthash infrastructure.
+
+Test cases will include:
+* Successful merged block propagation
+* Difficulty re-target testing
+* MultiAlgo reward balancing
+* Pool integration tests with Vertcoin-compatible software (e.g., VerthashMiner, NOMP)
+
+A testnet deployment will be used to trial merged mining prior to mainnet activation.
+
+== Appendix ==
+Resources:
+* Vertcoin Verthash GitHub: https://github.com/vertcoin-project/VerthashMiner
+* Litecoin-Dogecoin merged mining example: https://litecointalk.io/t/dogecoin-and-litecoin-merged-mining-explained/31632
+* DigiByte GitHub: https://github.com/DigiByte-Core/digibyte
+* AuxPoW reference: https://en.bitcoin.it/wiki/Merged_mining_specification
+
+== Comments ==
+Please post public comments to:
+https://github.com/DigiByte-Core/dips/wiki/Comments:DIP-0002
+
+Private feedback and coordination may be sent to the DIP author directly or discussed within the DIP forum thread.
